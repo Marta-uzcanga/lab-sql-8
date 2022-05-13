@@ -72,40 +72,21 @@ having title = 'Academy Dinosaur' and store_id = 1;
 
 -- 7. Get all pairs of actors that worked together.
 
-select first_name, last_name, title, fa.actor_id as actor
-from actor a
-join film_actor fa
-on a.actor_id = fa.actor_id
-join film f
-on fa.film_id = f.film_id
-where a.actor_id && f.film_id
-group by fa.actor_id;
 
 select * from film_actor;
 
-Select
-	f1.film_id, 
-    f1.actor_id as actor_one, 
-    f2.actor_id as actor_two 
-from film_actor as f1
+
+select f1.film_id, f1.actor_id as actor_one, f2.actor_id as actor_two from film_actor as f1
 join film_actor as f2
 on f1.film_id = f2.film_id
-where (f1.actor_id <> f2.actor_id) and (f1.actor_id < f2.actor_id)
-order by f1.actor_id, f2.actor_id;
+where (f1.actor_id < f2.actor_id)
+order by film_id, f1.actor_id, f2.actor_id;
+
+
 
 -- this lists the actor that acted tegether in one film
 -- 8. Get all pairs of customers that have rented the same film more than 3 times.
-select C1.CUSTOMER_ID, C2.CUSTOMER_ID, count(distinct(f.film_id)) as times_movie_rented
-from customer c1
-JOIN CUSTOMER C2
-ON C1.CUSTOMER_ID = C2.CUSTOMER_ID
-join rental r
-on r.customer_id = c1.customer_id
-join inventory i
-on i.inventory_id = r.inventory_id
-join film f
-where (f1.actor_id <> f2.actor_id) and (f1.actor_id < f2.actor_id)
-on f.film_id = i.film_id;
+
 
 Select
 	f.film_id, 
@@ -120,12 +101,8 @@ join inventory i
 on i.inventory_id = r.inventory_id
 join film f
 on f.film_id = i.film_id
-where (C1.CUSTOMER_id <> C2.CUSTOMER_id) and (C1.CUSTOMER_id < C2.CUSTOMER_id)
-ORDER BY C1.CUSTOMER_id,C2.CUSTOMER_ID;
-
-
-where (f1.actor_id <> f2.actor_id) and (f1.actor_id < f2.actor_id)
-order by f1.actor_id, f2.actor_id;
+where (f.film_id <> i.film_id) and (f.film_id < i.film_id)
+ORDER BY C1.CUSTOMER_id,C2.CUSTOMER_ID, f.film_id;
 
 
 
